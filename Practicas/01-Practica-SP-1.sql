@@ -12,3 +12,5 @@ end
 go
 
 exec sp_solicitarPromedio_prod 2
+
+exec sp_solicitarPromedio_prod 3

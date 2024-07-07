@@ -14,3 +14,22 @@ go
 exec sp_solicitarPromedio_prod 2
 
 exec sp_solicitarPromedio_prod 3
+
+--Crear un sp que reciba 2 fechas y debuelba una lista de empleados, que fueron contartados en ese rango de fechas full name 
+select * from employees
+go
+
+create or alter proc SP_2
+@a1 date,@a2 date 
+as
+begin
+select CONCAT(e.FirstName,' ',e.FirstName) as 'Nombre completo', e.HireDate as 'Fecha de contratacion' 
+from Employees as e
+where e.HireDate between @a1 and @2 
+end
+go
+
+exec SP_2 
+
+ 
+

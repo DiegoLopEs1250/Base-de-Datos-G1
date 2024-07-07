@@ -65,7 +65,7 @@ print 'El nombre completo es: ' + @nombre
 
 
 --CREAMOS LA BASE DE DATOS etlempresa y a trabajar ;)
-
+use NORTHWND
 select * from Customers
 
 create database etlempresa;
@@ -122,8 +122,27 @@ productobk int not null,
 nombreproducto nvarchar(40) not null,
 precio money not null,
 categoria int not null,
-
+existencia int not null,
+descontinuado bit not null,
+constraint pk_producto primary key (productoid)
 );
+
+--store procedure Porducto
+create or alter proc sp_etl_carga_Producto
+  
+  as
+    begin 
+	   insert into etlempresa.dbo.Producto
+	   select ProductID, ProductName as 'Nombre del Producto', UnitPrice as 'Precio', CategoryID as 'Categoria', UnitsInStock as 'Existencia', 
+	   Discontinued as 'Descontiniado'
+	   from NORTHWND.dbo.Products as np
+	   left join etlempresa.dbo.Producto etl
+	   on np.ProductID= etl.productobk 
+	   where etl.productobk is null;
+
+
+
+	end
 
 
 
@@ -135,10 +154,11 @@ nombrecompleto nvarchar (30) not null,
 ciudad nvarchar (15) not null,
 region nvarchar (15) not null,
 pais nvarchar (15) not null,
-
-constraint pk_empleado
-primary key (empleadoid)
+constraint pk_empleado primary key (empleadoid)
 );
+--Store procedure Empleado
+
+
 
 --Crear la tabla provedor 
 create table Provedor(

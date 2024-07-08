@@ -17,15 +17,22 @@ precionuev money not null,
 fechacambio date not null
 );
 
-go
-create or alter proc sp_Actualizar_precio_producto
-@nuevo_precio money, @producto_cambiar nvarchar (40)
 
+select * from Products
+select * from cambioPrecio
+
+go
+--1er store procedure
+create or alter proc sp_Actualizar_precio_producto
+@nuevo_precio money, @productid int
  as 
   begin 
-    
-    declare @precio_antiguo money 
 	select unitprice from Products
 
+	update Products 
+	set UnitPrice = @nuevo_precio
+	where ProductID = @productid
   end
 go
+--declare @precio_antiguo money 
+exec sp_Actualizar_precio_producto @nuevo_precio = $20, @productid = 1

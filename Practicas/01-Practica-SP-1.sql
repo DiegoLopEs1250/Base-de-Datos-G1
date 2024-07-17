@@ -25,11 +25,11 @@ as
 begin
 select CONCAT(e.FirstName,' ',e.FirstName) as 'Nombre completo', e.HireDate as 'Fecha de contratacion' 
 from Employees as e
-where e.HireDate between @a1 and @2 
+where e.HireDate between @a1 and @a2 
 end
 go
 
-exec SP_2 
+exec SP_2 '1992-05-01' , '1993-10-17'
 
  
 

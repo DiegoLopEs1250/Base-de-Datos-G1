@@ -10,7 +10,7 @@
 --WHEN NOT MATCHED BY SOURCE [AND <predicate>] -- two clauses allowed:  
 --  THEN <action>; -- one with UPDATE one with DELETE
 create database mergeEscuelita;
-use mergeEscuelita;
+use NORTHWND
 go
 
 
@@ -405,3 +405,15 @@ exec spu_carga_delta_s1_s2_merge_delete
 
 select * from StudentsC1;
 select * from StudentsC2;
+
+go
+
+create or alter proc spu_limpiar_tabla
+@nombreTabla nvarchar (50)
+as
+begin 
+   declare @sql nvarchar (50)
+   set @sql= 'truncate table '+ @nombreTabla;
+   exec (@sql)
+end;
+go
